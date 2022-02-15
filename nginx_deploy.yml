@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: toto
+  namespace: default
+  labels:
+    app: label1
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: label1
+  template:
+    metadata:
+      labels:
+        app: label1
+    spec:
+      containers:
+      - name: nginx
+        image: hashicorp/http-echo
+        args: 
+          - "-text=apple"

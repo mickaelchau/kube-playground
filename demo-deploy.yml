@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo
+  name: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - image: httpd
+        imagePullPolicy: Always
+        name: httpd
+        volumeMounts:
+        - name: httpd-conf
+          mountPath: /usr/local/apache2/conf
+      initContainers:
+      - name: write-conf
+        image: httpd
+        command:
+        - cp
+        - "/usr/local/apache2/conf/."
+        - "/writeconf"
+        - "-r"
+        volumeMounts:
+        - name: httpd-conf
+          mountPath: "/writeconf"
+      - name: write-port
+        image: busybox
+        command:
+        - sed
+        - "-i"
+        - "s/Listen 80/Listen 5678/"
+        - "/writeconf/httpd.conf"
+        volumeMounts:
+        - name: httpd-conf
+          mountPath: "/writeconf"
+      volumes:
+      - name: httpd-conf
+        emptyDir: {}
+    
