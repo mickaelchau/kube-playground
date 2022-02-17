@@ -3,26 +3,16 @@ kind: Ingress
 metadata:
   name: fruit-ingress
   annotations:
-    kubernetes.io/ingress.allow-http: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/app-root: /app1
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /apple
-        pathType: Prefix
+      - path: /app1
+        pathType: Exact
         backend:
           service:
             name: apple-service
             port: 
-              number: 5678
-  - http:
-      paths:
-      - path: /clementine
-        pathType: Prefix
-        backend:
-          service:
-            name: clementine-service
-            port: 
-              number: 5678
+              number: 80

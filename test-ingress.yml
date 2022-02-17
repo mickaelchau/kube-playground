@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: minimal-ingress
   annotations:
+    nginx.ingress.kubernetes.io/app-root: /app1
     kubernetes.io/ingress.allow-http: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /test
+      - path: /
         pathType: Prefix
         backend:
           service:

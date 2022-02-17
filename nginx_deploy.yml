@@ -20,3 +20,4 @@ spec:
         image: hashicorp/http-echo
         args: 
           - "-text=apple"
+          - "-listen=:80"
